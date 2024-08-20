@@ -18,3 +18,24 @@ class Agent(AgentBase):
     class Config:
         orm_mode = True
         
+
+class ConversationBase(BaseModel):
+    agent_id: str
+
+class ConversationCreate(ConversationBase):
+    pass
+
+class Conversation(ConversationBase):
+    id: str
+    timestamp: datetime= datetime.utcnow()
+
+class Config:
+    orm_mode=True
+
+class Agent(AgentBase):
+    id: str
+    timestamp: datetime = datetime.utcnow()
+    conversations: List[Conversation] = []
+
+    class Config: 
+        orm_mode= True

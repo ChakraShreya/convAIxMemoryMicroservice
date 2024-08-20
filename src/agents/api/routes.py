@@ -38,3 +38,16 @@ async def create_agent(agent : agents.api.schemas.AgentCreate,db: Session = Depe
     log.info(f"Agent created with id: {db_agent.id}")
 
     return db_agent
+
+@router.post("/create-conversation",response_model= agents.api.schemas.Conversation)
+async def create_conversation(conversation: agents.api.schemas.ConversationCreate , db: Session = Depends(get_db)):
+    """
+    Create a conversation linked to an agent
+    """
+    log.info(f"Creation conversation assigned to agent id: {conversation.agent_id}")
+    db_conversation = agents.crud.create_conversation(db,conversation)
+    log.info(f"Conversation created with id: {db_conversation.id}")
+
+    return db_conversation
+
+

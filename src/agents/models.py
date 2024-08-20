@@ -15,3 +15,13 @@ class Agent(Base):
     response_shape=Column(JSON,nullable=False)
     instructions=Column(String,nullable=False)
     
+    conversations = relationship("Conversation", back_populates= "agent")
+
+class Conversation(Base):
+    __tablename__ = "converations"
+
+    id= Column(String, primary_key = True , index= True)
+    agent_id = Column( String, ForeignKey("agent.id"))
+    timestamp = Column(DateTime,default= datetime.utcnow)
+
+    agent = relationship("Agent",back_populates="conversations")
